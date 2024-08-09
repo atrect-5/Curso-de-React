@@ -1,13 +1,17 @@
 import React from "react"
 import { BrowserRouter } from "react-router-dom"
-import AppRoutes from "./routes"
+import { Header, Footer, AppRoutes } from "./components/common/index.jsx"
 
 const App = () => {
   return(
-    <BrowserRouter>
-      {/* implementamos Routes, que seran las rutas dentro del index en la carpeta routes */}
-      <AppRoutes/>
-    </BrowserRouter>
+    <>  
+      <BrowserRouter>
+        <Header/>
+        {/* implementamos AppRoutes, que seran las rutas dentro del index en la carpeta routes */}
+        <AppRoutes/>
+        <Footer/>
+      </BrowserRouter>
+    </>
   )
 }
 
