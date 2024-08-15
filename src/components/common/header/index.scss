@@ -1,9 +1,12 @@
+// Importamos el archivo donde tenemos guardados nuestras variables de colores
+@import "../../../consts/variables.scss";
+
 
 .header-container{
     width: 100%;
     height: 9vh;
     max-height: 9vh;
-    background-color: #0F0F0F;
+    background-color: $primary;
     color: white;
     display: flex;
     justify-content: space-around;
@@ -22,7 +25,6 @@
                 transition: all .2s;
                 &:hover {
                     font-size: 1.2em;
-                    text-decoration: underline;
                     font-weight: 600;
                 }
             }
@@ -34,7 +36,7 @@
         justify-content: right;
         margin-right: 10vw;
         input {
-            height: 2.5vh;
+            height: 3vh;
             width: 17vw;
             margin-right: 10px;
             text-align: center;
@@ -45,7 +47,7 @@
             border-radius: 25px;
             text-transform: uppercase;
             font-weight: 600;
-            background-color: #232D3F;
+            background-color: $accent-variant;
             color: white;
             transition: all .2s;
             &:hover {
