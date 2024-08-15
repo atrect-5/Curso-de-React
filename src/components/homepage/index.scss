@@ -1,0 +1,32 @@
+@import '../../consts/variables.scss';
+
+.welcome-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../assets/backgroun-image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    .welcome-text {
+        font-size: 4em;
+        color: white;
+        text-align: center;
+        font-weight: 600;
+    }
+    .welcome-button {
+        width: 25%;
+        height: 5%;
+        background-color: $accent-variant;
+        border: 0;
+        border-radius: 15px;
+        box-shadow: 10px 10px 5px rgba(black, 0.4);
+        a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    }
+}
