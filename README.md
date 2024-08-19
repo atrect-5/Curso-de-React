@@ -1,5 +1,8 @@
 # Practica de React
-### En este repositorio se encuentra mi practica de react creada para Azul School
+### En este repositorio se encuentra mi practica de react creada para Azul School  
+  
+  
+Este proyecto fue hecho con create-react-app
 
 <!-- # Getting Started with Create React App
 

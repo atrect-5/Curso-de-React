@@ -7,10 +7,12 @@ import AzulSchoolLogo from '../../assets/Azul-School-Logo.png'
 const HomePage = () => (
     <>
         <div className="welcome-container">
-            <img src={AzulSchoolLogo} alt="react-logo" />
-            <p className="welcome-text">
-                The best movie platform, from Azul School
-            </p>
+            <div className="welcome-son">
+                <img src={AzulSchoolLogo} alt="react-logo" className="welcome-img"/>
+                <p className="welcome-text">
+                    The best movie platform, from Azul School
+                </p>
+            </div>
             <button className="welcome-button">
                 <Link to='/peliculas'>
                     Ver peliculas
