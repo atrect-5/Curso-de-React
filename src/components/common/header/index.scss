@@ -1,10 +1,12 @@
 
+@import "../../../consts/colors.scss";
+
 .header-container {
     width: 100%;
     height: 8vh;
     max-height: 8vh;
-    background-color: #070F2B;
-    color : white;
+    background-color: $primary;
+    color : $white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -19,7 +21,7 @@
         li {
             a {
                 text-decoration: none;
-                color: white;
+                color: $white;
                 font-size: 1.3rem;
                 font-weight: 500;
                 transition: all 0.2s;
@@ -53,14 +55,14 @@
             border-radius: 5px;
             font-size: .8em;
             font-weight: 600;
-            color: white;
-            background-color: #9290C3;
+            color: $white;
+            background-color: $accent;
             transition: all 0.1s;
             &:hover {
-                background-color: #535C91;
+                background-color: $accent-variant;
             }
             &:active {
-                background-color: #3A3F6D;
+                background-color: $accent-variant-2;
             }
         }
     }

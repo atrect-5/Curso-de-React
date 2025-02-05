@@ -1,6 +1,8 @@
 
 import React from "react"
 
+import "./index.scss"
+
 // Creamos nuestro componente footer (Este deberia estar presente en toda la pagina en la parte inferior)
 const Footer = () => (
     <>
