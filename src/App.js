@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+// Importamos react ya que haremos un componente de react
+import React from "react"
+import { BrowserRouter as Router } from "react-router-dom"
 
-function App() {
+// Importamos nuestros componentes 
+import RoutesOfApp from "./routes"
+
+// Declaramos la app como un functional component
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <RoutesOfApp/>
+    </Router>
+  )
 }
 
-export default App;
+
+// Exportamos la app 
+export default App
