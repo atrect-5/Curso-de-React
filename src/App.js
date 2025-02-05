@@ -4,12 +4,15 @@ import { BrowserRouter as Router } from "react-router-dom"
 
 // Importamos nuestros componentes 
 import RoutesOfApp from "./routes"
+import { Header, Footer } from "./components/common"
 
 // Declaramos la app como un functional component
 const App = () => {
   return (
     <Router>
+      <Header/>
       <RoutesOfApp/>
+      <Footer/> 
     </Router>
   )
 }
