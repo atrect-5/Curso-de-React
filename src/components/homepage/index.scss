@@ -8,6 +8,9 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  background-image: url('../../assets/backgorund-homepage.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   .img-div{
     width: 100%;
     display: flex;
@@ -16,27 +19,32 @@
     img{
         width: 25vw;
         max-width: 150px;
+        box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
     }
   }
 
   h1{
-    font-size: 2em;
+    font-size: 3em;
     font-weight: 700;
-    color: $black;
+    color: $white;
     text-align: center;
+    padding: 0 10%;
+    text-shadow: 5px 3px 4px rgba($color: $black, $alpha: 1);
   }
 
 
   button{
     width: 30%;
-    height: 30px;
+    height: 40px;
     border: 0;
     border-radius: 15px;
     font-size: 1em;
     font-weight: 700;
     color: $white;
     background-color: $accent;
+    box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
     transition: all 0.1s;
+    margin-bottom: 100px;
     &:hover {
         background-color: $accent-variant;
     }

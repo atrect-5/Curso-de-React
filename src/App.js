@@ -6,12 +6,16 @@ import { BrowserRouter as Router } from "react-router-dom"
 import RoutesOfApp from "./routes"
 import { Header, Footer } from "./components/common"
 
+import './App.scss'
+
 // Declaramos la app como un functional component
 const App = () => {
   return (
     <Router>
       <Header/>
-      <RoutesOfApp/>
+      <div className="main-container">
+        <RoutesOfApp/>  
+      </div>
       <Footer/> 
     </Router>
   )
