@@ -15,11 +15,11 @@ const HomePage = () => (
                 <img src={azulSchoolLogo} alt="azul-school-logo" />
             </div>
             <h1>Welcome to the best movies page</h1>
-            <button>
-                <Link to="/movies">
+            <Link to="/movies">
+                <button>
                     Ver peliculas
-                </Link>
-            </button>
+                </button>
+            </Link>
         </div>
     </>
 )
