@@ -11,13 +11,13 @@ const Header = () => {
             <header className = "header-container">
                 <ul>
                     <li>
-                        <Link to={"/"}>| Inicio</Link>
+                        <Link to={"/"}>| Inicio |</Link>
                     </li>
                     <li>
-                        <Link to={'/movies'}>| Peliculas</Link>
+                        <Link to={'/movies'}>| Peliculas |</Link>
                     </li>
                     <li>
-                        <Link to={'/movies/create'}>| Crear Pelicula</Link>
+                        <Link to={'/movies/create'}>| Crear Pelicula |</Link>
                     </li>
                 </ul>
                 <div className="search-container">
