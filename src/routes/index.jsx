@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 
+import { MovieList } from '../components/movies';
 import HomePage from '../components/homepage/homepage';
 
 
@@ -10,9 +11,9 @@ import HomePage from '../components/homepage/homepage';
 // Con parentesis significa que retornaremos directamente jsx
 const RoutesOfApp = () => (
     <Routes>
-        <Route exact path="/" Component ={HomePage} />
-        <Route exact path='/movies' Component = {() => <p>Aqui se podran observar las peliculas proximamente...</p>} />
-        <Route path ="*" Component={() => <h1>404 Not Found</h1>} />
+        <Route exact path="/" element ={<HomePage/>} />
+        <Route exact path='/movies' element = {<MovieList/>} />
+        <Route path ="*" element={<h1>404 Not Found</h1>} />
         {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes>
 );
