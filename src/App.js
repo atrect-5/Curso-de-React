@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 
 // Importamos nuestros componentes 
 import RoutesOfApp from "./routes"
-import { Header, Footer } from "./components/common"
+import { Header, Footer } from "./components"
 
 import './App.scss'
 
