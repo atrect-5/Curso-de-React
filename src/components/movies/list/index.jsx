@@ -11,6 +11,7 @@ import { getMoviesService } from "../../../services/"
 
 // importmos los estilos
 import './index.scss'
+import { useNavigate } from "react-router-dom"
 
 export default class MovieList extends Component {
     constructor() {
@@ -31,7 +32,7 @@ export default class MovieList extends Component {
         // Si no hay error guardamos la lista de peliculas, si hay error guardamos el error
         if (!movies.error) {
             this.setState({
-                movies : movies,
+                movies, // Equivalente a -> movies : movies , Esto por que se llaman igual
                 isReady : true
             })
         }else{
@@ -93,19 +94,26 @@ const ListComponent = (props) => (
 )
 
 // Componente de pelicula individual
-const MovieCard = ({movie}) => (
+const MovieCard = ({movie}) => {
+    // Al darle clic al movie card, se redirijira a la vista especifica de cada pelicula
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate(`/movies/${movie._id}`)
+    }
+    return(
     <>
-        <div className="movie-card">
+        <div className="movie-card" onClick={handleClick}>
             <div className="movie-card-important">
                 <p className="movie-card-title">{movie.title}</p>
                 <p className="movie-card-description">{movie.description}</p>
             </div>
             <div className="movie-card-detail">
                 <p>
-                    Costo de la entrada: <span>{movie.tiketPrice}</span>
+                    Costo de la entrada: <span>${parseFloat(movie.tiketPrice).toFixed(2)}</span>
                 </p>
                 <p>
-                    Duracion de la pelicula: <span>{movie.duration} </span>mins
+                    Duracion de la pelicula: <span>{movie.duration} mins</span>
                 </p>
                 <p>
                     {
@@ -135,8 +143,8 @@ const MovieCard = ({movie}) => (
             </div>
         </div>
     </>
-)
-
+    )
+}
 
 // Componente para mostrar los errores
 const ErrorComponent = ({error}) => (

@@ -1,5 +1,6 @@
 
-import { MovieList } from "./movies";
+import { MovieList, MovieDetail } from "./movies";
+
 import HomePage from "./homepage/homepage";
 
 import { Header, Footer } from "./common";
@@ -12,6 +13,6 @@ export {
     HomePage,
     Header, 
     Footer,
-    
+    MovieDetail,
     NotFound
 }
