@@ -1,3 +1,122 @@
 
-@import '../../../consts/colors.scss'
+@import '../../../consts/colors.scss';
+
+.principal-container {
+    width: 100%;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../../assets/backgorund-homepage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba($accent-variant-2, 0.4) transparent;
+
+    
+    .page-title {
+        color: $white;
+        font-size: 2em;
+        font-weight: 500;
+        @media (min-width: 768px) {
+            padding-right: 30vw;
+        }
+    }
+
+
+    .movie-card-container {
+        width: 95%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+        gap: 25px;
+        justify-items: center;
+
+        @media (max-width: 1100px) {
+            grid-template-columns: repeat(auto-fill, minmax(47%, 1fr));
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(auto-fill, minmax(95%, 1fr));
+            gap: 10px;
+        }
+    }
+
+
+    .movie-card {
+        width: 95%;
+        border: 1px solid $primary;
+        padding: 40px 15px;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: rgba($accent, 0.3);
+        transition: all .3s ease;
+        &:hover {
+            background-color: rgba($accent-variant, 0.7);
+        }
+        &:active {
+            background-color: rgba($accent-variant-2, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            padding: 25px 10px;
+        }
+        
+        .movie-card-important {
+            .movie-card-title {
+                color: $white;
+                font-weight: 600;
+                font-size: 1.8em;
+                @media (max-width: 768px) {
+                    font-size: 1.2em;
+                }
+            }
+            .movie-card-description {
+                font-weight: 500;
+                color: $white;
+                font-size: 1.2em;
+                @media (max-width: 768px) {
+                    font-size: 1em;
+                }
+            }
+        }
+        .movie-card-detail {
+            p {
+                font-weight: 600;
+                color: $white;
+                span {
+                    font-weight: 300;
+                }
+            }
+        }
+        .movie-card-schedules {
+            height: 90px;
+            @media (max-width: 768px) {
+                height: auto;
+            }
+            p {
+                color: $white;
+                font-weight: 600;
+            }
+            span {
+                color: $white;
+            }
+        }
+
+    }
+
+    .info-parragraf {
+        padding: 0px 25px;
+        color: $white;
+        font-size: 1em;
+        font-weight: 500;
+    }
+    
+    .spinner-custom {
+        color: $white;
+    }
+    
+}
 
