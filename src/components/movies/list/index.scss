@@ -10,10 +10,6 @@
     background-image: url('../../../assets/backgorund-homepage.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-
-    scrollbar-width: thin;
-    scrollbar-color: rgba($accent-variant-2, 0.4) transparent;
-
     
     .page-title {
         color: $white;
@@ -53,6 +49,7 @@
         justify-content: space-between;
         background-color: rgba($accent, 0.3);
         transition: all .3s ease;
+        box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
         &:hover {
             background-color: rgba($accent-variant, 0.7);
         }

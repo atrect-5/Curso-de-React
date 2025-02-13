@@ -5,13 +5,13 @@
 import React, { Component } from "react"
 import moment from "moment/moment"
 import { RingLoader } from "react-spinners"
+import { useNavigate } from "react-router-dom"
 
 // importamos nuestros servicios 
 import { getMoviesService } from "../../../services/"
 
 // importmos los estilos
 import './index.scss'
-import { useNavigate } from "react-router-dom"
 
 export default class MovieList extends Component {
     constructor() {

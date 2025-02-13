@@ -1,6 +1,7 @@
 
 import React, { Component } from "react"
-import { useParams } from "react-router-dom"
+import moment from "moment"
+import { useParams, useNavigate } from "react-router-dom"
 import { RingLoader } from "react-spinners"
 
 import { getMoviesService } from "../../../services"
@@ -82,13 +83,70 @@ class MovieDetailClass extends Component {
     }
 }
 
-const DetailComponent = ({movie}) => (
+const DetailComponent = ({movie}) => {
+    const navigate = useNavigate()
+
+    const eliminarPelicula = () => {
+        navigate(`/movies/create`)
+    }
+    const editarPelicula = () => {
+        navigate('/')
+    }
+    return (
     <>
-    <div className="movie-detail-container">
-        <p>{movie.title}</p>
-    </div>
-    </>
-)
+        <div className="movie-info">
+            <div className="movie-detail-title">
+                <img className="img-detail" src={movie.cover} alt="" />
+
+                <p className="movie-title">{movie.title}</p>
+            </div>
+            
+            <p className="movie-description">{movie.description}</p>
+            
+            <div className="movie-extra-info">
+                <div className="movie-principal-detail">
+                    <p>
+                        Costo de la entrada: <span>${parseFloat(movie.tiketPrice).toFixed(2)}</span>
+                    </p>
+                    <p>
+                        Duracion de la pelicula: <span>{movie.duration} mins</span>
+                    </p>
+
+                    <p>
+                        {
+                            movie.isOnCinemas ? 
+                                'Disponible en cines'
+                                : 'No disponible en cines'
+                        }
+                    </p>
+                </div>
+                <div className="movie-schedules-detail">
+                {
+                    movie.schedules.length > 0 ?
+                        <>
+                        <p>Horarios disponibles: </p>
+                        {
+                            movie.schedules.map((schedule) => (
+                                <p className="schedule-detail" key={schedule._id}>
+                                {moment(schedule.time).format('DD / MM - HH:mm')}
+                            </p>
+                            ))
+                        }
+                        </>
+                        : <p>No hay horarios disponibles</p>
+                }
+                </div>
+            </div>
+            <hr />
+            <div className="button-detail-container">
+                <button onClick={editarPelicula}>Editar Pelicula</button>
+                <button onClick={eliminarPelicula}>Eliminar Pelicula</button>
+            </div>
+            
+        </div>
+        </>
+    )
+}
 
 
 // Componente para mostrar los errores

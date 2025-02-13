@@ -13,9 +13,6 @@
     background-size: cover;
     background-repeat: no-repeat;
 
-    scrollbar-width: thin;
-    scrollbar-color: rgba($accent-variant-2, 0.4) transparent;
-
     .page-title {
         color: $white;
         font-size: 2em;
@@ -26,15 +23,160 @@
     }
 
 
+    .movie-info {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 40px 60px;
+        margin-bottom: 20px;
+        border-radius: 30px;
+        background-color: rgba($accent-variant, 0.4);
+        box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
+        transition: all .3s ease;
+        &:hover {
+            background-color: rgba($accent-variant-2, 0.4);
+        }
+        @media (max-width: 768px) {
+            padding: 40px 15px;
+        }
+
+        .movie-detail-title {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: center;
+            }
+            img {
+                flex-shrink: 0; /* Evita que la imagen se encoja */
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
+            @media (max-width: 768px) {
+                width: 150px;
+                height: 150px;
+            }
+            }
+            .movie-title {
+                flex-grow: 1; /* Permite que el texto ocupe el espacio sobrante */
+                text-align: center;
+                color: $white;
+                font-size: 3em;
+                font-weight: 600;
+                @media (max-width: 1000px) {
+                    font-size: 2.5em;
+                }
+                @media (max-width: 768px) {
+                    font-size: 2em;
+                }
+            }
+        }
+
+        .movie-description {
+            text-align: center;
+            color: $white;
+            padding: 10px 100px;
+            font-size: 1.2em;
+            @media (max-width: 1100px) {
+                padding: 10px 50px;
+            }
+            @media (max-width: 768px) {
+                font-size: 1em;
+                padding: 10px 5px;
+            }
+        }
+
+        .movie-extra-info {
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            @media (max-width: 1300px) {
+                width: 95%;
+            }
+            @media (max-width: 768px) {
+                width: 80%;
+                flex-direction: column;
+            }
+
+            .movie-principal-detail {
+                p {
+                    font-weight: 600;
+                    color: $white;
+                    span {
+                        font-weight: 300;
+                    }
+                }
+            }
+            .movie-schedules-detail {
+                width: 50%;
+                border-left: 1px solid rgba(255, 255, 255, 0.667);
+                padding-left: 10px;
+                box-sizing: border-box;
+                text-align: center;
+                p {
+                    font-weight: 600;
+                    color: $white;
+                }
+                .schedule-detail {
+                    font-weight: 300;
+                }
+                @media (max-width: 768px) {
+                    width: 90%;
+                    padding-left: 0;
+                    border: none;
+                }
+            }
+
+        }
+
+        hr {
+            width: 100%;
+        }
+
+        .button-detail-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            button{
+                width: 30%;
+                height: 30px;
+                border: 0;
+                margin-top: 20px;
+                border-radius: 15px;
+                font-size: 1em;
+                font-weight: 700;
+                color: $white;
+                background-color: $accent;
+                box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
+                transition: all 0.1s;
+                &:hover {
+                    background-color: $accent-variant;
+                }
+                &:active {
+                    background-color: $accent-variant-2;
+                }
+                @media (max-width: 768px) {
+                    height: 50px;
+                }
+            }
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    }
+
+
     .info-parragraf {
         padding: 0px 25px;
         color: $white;
         font-size: 1em;
         font-weight: 500;
-    }
-    
-    .spinner-custom {
-        color: $white;
     }
     
 }
