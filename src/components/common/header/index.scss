@@ -26,10 +26,24 @@
                 color: $white;
                 font-size: 1.3rem;
                 font-weight: 500;
-                transition: all 0.2s;
-                &:hover {
-                    font-weight: 550;
-                    text-decoration: underline;
+                &::after {
+                    content: '';
+                    position:relative;
+                    width: 0;
+                    height: 2px;
+                    display: block;
+                    margin-top: 2px;
+                    left: 50%;
+                    background: $accent;
+                    transition: all 0.2s ease;
+                }
+                &:hover::after {
+                    width: 100%;
+                    left: 0;
+                }
+                &:active::after {
+                    width: 50%;
+                    left: 25%;
                 }
             }
         }

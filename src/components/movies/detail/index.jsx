@@ -87,10 +87,10 @@ const DetailComponent = ({movie}) => {
     const navigate = useNavigate()
 
     const eliminarPelicula = () => {
-        navigate(`/movies/create`)
+        navigate(`/movies/delete/${movie._id}`)
     }
     const editarPelicula = () => {
-        navigate('/')
+        navigate(`/movies/edit/${movie._id}`)
     }
     return (
     <>
@@ -111,7 +111,9 @@ const DetailComponent = ({movie}) => {
                     <p>
                         Duracion de la pelicula: <span>{movie.duration} mins</span>
                     </p>
-
+                    <p>
+                        A&ntilde;o en que salio la pelicula: <span>{movie.year}</span>
+                    </p>
                     <p>
                         {
                             movie.isOnCinemas ? 

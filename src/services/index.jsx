@@ -1,7 +1,8 @@
 // Importamos y exportamos los servicios que hemos creado
-import { getMoviesService } from "./movies/movieService"
+import { getMoviesService, createMovieService } from "./movies/movieService"
 
 
 export {
-    getMoviesService
+    getMoviesService,
+    createMovieService
 }
