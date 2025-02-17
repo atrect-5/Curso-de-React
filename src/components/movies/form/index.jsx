@@ -1,5 +1,6 @@
 
 import React, { Component } from "react";
+import { toast } from "react-toastify";
 
 import { createMovieService } from "../../../services";
 
@@ -10,30 +11,28 @@ import './index.scss'
 export default class MovieForm extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            newMovie:{
-                title: '',
-                year: '',
-                description: '',
-                duration: '',
-                contentRating: '',
-                tags: [],
-                tiketPrice: '',
-                isOnCinemas: false,
-                schedules: [{
-                    time: ''
-                }]
-            },
-            touched: {
-                title: false,
-                year: false
-            },
-            created: {
-
-            }
-        }
+        this.state = this.getInitialState()
     }
-
+    // Creamos un objeto en el que se guardara el estado inicial
+    getInitialState = () => ({
+        newMovie:{
+            title: '',
+            year: '',
+            description: '',
+            duration: '',
+            contentRating: '',
+            tags: [],
+            tiketPrice: '',
+            isOnCinemas: false,
+            schedules: [{
+                time: ''
+            }]
+        },
+        touched: {
+            title: false,
+            year: false
+        }
+    })
 
     componentDidMount = () => {
         
@@ -151,15 +150,15 @@ export default class MovieForm extends Component {
             const result = await createMovieService (newMovie)
 
             if (!result.hasError){
-                console.log('Pelicula creada con exito')
-                console.log(result)                
+                toast.success('Pelicula creada con exito')  
+                this.setState(this.getInitialState())      
             }else{
-                console.log('Hubo un error al crear pelicula')
-                console.log(result.error)
+                toast.error(`Hubo un error al crear pelicula -> ${result.error}`)
             }
+            
 
         }catch(error){
-            console.log('Error del servidor')
+            toast.error(`Error del servidor`)
             console.log(error)            
         }
     }

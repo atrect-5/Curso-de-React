@@ -82,7 +82,7 @@ const ListComponent = (props) => (
             {
             // Revisamos que si hayan peliculas existentes   
             props.movies.length > 0 ?
-                props.movies.map((movie) => (
+                props.movies.slice().reverse().map((movie) => (
                     <MovieCard key={movie._id}
                         movie={movie}
                     />
