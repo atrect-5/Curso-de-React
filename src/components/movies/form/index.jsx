@@ -1,23 +1,11 @@
 
 import React, { Component } from "react";
 
-
-// import { createMovieService } from "../../../services";
+import { createMovieService } from "../../../services";
 
 import { movieRating, movieTags } from "../../../consts";
 
 import './index.scss'
-
-
-// Función para convertir la fecha al formato requerido por el campo datetime-local
-const formatDateTimeForInput = (datetime) => {
-    return datetime.slice(0, 16);
-};
-
-// Función para convertir la fecha al formato requerido por MongoDB
-/*const formatDateTimeForDatabase = (datetime) => {
-    return new Date(datetime).toISOString();
-};*/
 
 export default class MovieForm extends Component {
     constructor(props){
@@ -25,30 +13,65 @@ export default class MovieForm extends Component {
         this.state = {
             newMovie:{
                 title: '',
-                year: null,
+                year: '',
                 description: '',
-                duration: null,
+                duration: '',
                 contentRating: '',
                 tags: [],
-                tiketPrice: null,
+                tiketPrice: '',
                 isOnCinemas: false,
                 schedules: [{
-                    time: null
+                    time: ''
                 }]
+            },
+            touched: {
+                title: false,
+                year: false
+            },
+            created: {
+
             }
         }
+    }
+
+
+    componentDidMount = () => {
+        
+    }
+
+    // Función para convertir la fecha al formato requerido por el campo datetime-local
+    formatDateTimeForInput = (datetime) => {
+        const date = new Date(datetime);
+        const offset = date.getTimezoneOffset();
+        const adjustedDate = new Date(date.getTime() - (offset * 60 * 1000));
+        return adjustedDate.toISOString().slice(0, 16);
+    }
+
+    // Función para convertir la fecha al formato requerido por MongoDB
+    formatDateTimeForDatabase = async () => {
+        this.setState(prevState => ({
+            newMovie: {
+                ...prevState.newMovie,
+                schedules: prevState.newMovie.schedules
+                                                .filter(schedule => schedule.time )
+            }
+        }))
     }
 
 
     // Metodo que actualiza los datos del state cuando se hace algun cambio
     handleChange = e => {
         // Obtenemos el nombre del elemento que se cambio y el valor del mismo
-        const { name, value } = e.target
+        const { name, value, type, checked } = e.target
         // Guardamos en el state los datos de la pelicula que teniamos mas el valor del objeto cambiado
         this.setState(prevState => ({
             newMovie: {
                 ...prevState.newMovie,
-                [name]: value
+                [name]: type === 'checkbox' ? checked : (value || '')
+            },
+            touched: {
+                ...prevState.touched,
+                [name] : true
             }
         }))
     }
@@ -56,26 +79,12 @@ export default class MovieForm extends Component {
     // Metodo que agrega el tag a la lista del state cuando se selecciona un elemento
     handleCheckboxChange = e => {
         const { name, checked } = e.target
-        this.setState(prevState => {
-            const tags = checked ?
-                [...prevState.newMovie.tags, name]
-                : prevState.newMovie.tags.filter(tag => tag !== name)
-            return {
-                newMovie:{
-                    ...prevState.newMovie,
-                    tags
-                }
-            }
-        })
-    }
-
-    // Metodo cuando is onCinema cambia
-    handleOnCinemaChange = e =>{
-        // Guardamos el valor del checkbox isOnCinemas en el state (true or false)
-        this.setState((prevState) => ({
-            newMovie: {
+        this.setState(prevState => ({
+            newMovie:{
                 ...prevState.newMovie,
-                isOnCinemas: e.target.checked
+                tags : checked ?
+                    [...prevState.newMovie.tags, name]
+                    : prevState.newMovie.tags.filter(tag => tag !== name)
             }
         }))
     }
@@ -87,26 +96,20 @@ export default class MovieForm extends Component {
         this.setState((prevState) => ({
             newMovie: {
                 ...prevState.newMovie,
-                schedules: [...prevState.newMovie.schedules, { time: null }]
+                schedules: [...prevState.newMovie.schedules, { time: '' }]
             }
-        }));
+        }))
     }
 
     // Metodo para quitar un horario
     removeSchedule = index => {
-        this.setState((prevState) => {
-            // Se obtiene la lista de horarios que hay
-            const schedules = [...prevState.newMovie.schedules]
-            // Se elimina el horario en la posicion 'index' de la lista
-            schedules.splice(index, 1)
-            // Se guarda la nueva lista de los horarios en e state
-            return {
-                newMovie: {
-                    ...prevState.newMovie,
-                    schedules
-                }
-            };
-        });
+
+        this.setState((prevState) => ({
+            newMovie: {
+                ...prevState.newMovie,
+                schedules : prevState.newMovie.schedules.filter((schedule, i) => i !== index)
+            }
+        }))
     }
 
     // Metodo que guarda los cambios de los horarios en el state
@@ -128,6 +131,39 @@ export default class MovieForm extends Component {
         })
     }
 
+    handleSubmit = async () => {
+        // Primero formatemos la fecha y esperamos a que termine la funcion, ya que se debe eliminar los horarios vacios
+        await this.formatDateTimeForDatabase()
+
+        const { newMovie } = this.state
+        this.setState({
+            touched:{
+                title:true,
+                year:true
+            }
+        })
+
+        if (!newMovie.title || !newMovie.year || newMovie.year<0){
+            return
+        }
+
+        try {
+            const result = await createMovieService (newMovie)
+
+            if (!result.hasError){
+                console.log('Pelicula creada con exito')
+                console.log(result)                
+            }else{
+                console.log('Hubo un error al crear pelicula')
+                console.log(result.error)
+            }
+
+        }catch(error){
+            console.log('Error del servidor')
+            console.log(error)            
+        }
+    }
+
     render () {
         const {
             title,
@@ -144,18 +180,32 @@ export default class MovieForm extends Component {
         return(
             <>
                 <div className="form-movie-container">
-                    <p className="page-title">Crear pelicula: </p>
+                    <p className="page-title">{this.state.newMovie.title ? 'Editar pelicula' : 'Crear Pelicula' }</p>
                     <div className="input-data-container">
 
                         <input type="text" name="title" value={title} 
                             placeholder="Titulo" required onChange={this.handleChange} 
                         />
+                        {
+                            this.state.touched.title && !title && (
+                                <p className="error-message">El título es necesario</p>
+                            ) 
+                        }
                         <textarea name="description" value={description} 
                             placeholder="Descripcion" onChange={this.handleChange}>
                         </textarea>
                         <input type="number" name="year" value={year} 
                             placeholder='Año' required onChange={this.handleChange}
                         />
+                        {
+                            this.state.touched.year && !year && (
+                                <p className="error-message">El año es necesario</p>
+                            )
+                        }{
+                            year<0 && (
+                                <p className="error-message">El año no puede ser negativo</p>
+                            )
+                        }
                         <input type="number" name="duration" value={duration} 
                             placeholder="Duracion" onChange={this.handleChange} 
                         />
@@ -184,20 +234,20 @@ export default class MovieForm extends Component {
                             placeholder="Precio del boleto" onChange={this.handleChange}
                         />
 
-                        <p>La pelicula esta en el cine? <input type="checkbox" name="inOnCinemas" 
-                        checked={isOnCinemas} onChange={this.handleOnCinemaChange}/></p>
+                        <p>La pelicula esta en el cine? <input type="checkbox" name="isOnCinemas" 
+                        checked={isOnCinemas} onChange={this.handleChange}/></p>
 
                         <p>Horarios:</p>
                         {schedules.map((schedule, index) => (
                             <div key={index} className="schedule-input">
-                                <input type="datetime-local" value={schedule.time ? formatDateTimeForInput(schedule.time) : ''} onChange={(e) => this.handleScheduleChange(index, e)} />
+                                <input type="datetime-local" value={schedule.time ? this.formatDateTimeForInput(schedule.time) : ''} onChange={(e) => this.handleScheduleChange(index, e)} />
                                 <button type="button" onClick={() => this.removeSchedule(index)}>Eliminar</button>
                             </div>
                         ))}
                         <button type="button" onClick={this.addSchedule}>Agregar Horario</button>
 
 
-                        <input type="submit" value="Guardar informacion" />
+                        <button className="save-info-button" onClick={() => this.handleSubmit()}>Guardar informacion</button>
 
 
                     </div>

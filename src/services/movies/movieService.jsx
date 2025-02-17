@@ -34,7 +34,7 @@ export const getMoviesService = async (movieId) => {
 // Servicio que se encarga de guardar una nueva pelicula en la base de datos
 export const createMovieService = async (movieData) => {
     try{
-        const response = await axios.post(`${API_URL}${moviesEndpoint}`, ...movieData,
+        const response = await axios.post(`${API_URL}${moviesEndpoint}`, movieData,
             {
                 headers: {
                     'Content-Type': 'application/json'
