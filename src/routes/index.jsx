@@ -14,6 +14,7 @@ const RoutesOfApp = () => (
         <Route exact path="/" element={<HomePage />} />
         <Route exact path='/movies' element = {<MovieList/>} />
         <Route exact path='/movies/create' element = {<MovieForm/>} />
+        <Route exact path='/movies/edit/:movieId' element = {<MovieForm/>} />
         <Route exact path="/movies/:movieId" element={<MovieDetail />} />
         <Route path ="*" element = {<NotFound/>} />
         {/* <Route path="*" element={<Navigate to="/" />} /> */}

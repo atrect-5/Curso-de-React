@@ -64,3 +64,36 @@ export const createMovieService = async (movieData) => {
         }
     }
 }
+
+export const updateMovieById = async (movieId, movieData) => {
+    try{
+        const response = await axios.put(`${API_URL}${moviesEndpoint}${movieId}`, movieData,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        if(response.data.error){
+            // El servidor manda error
+            return {
+                hasError: true,
+                error: response.data.error
+            }
+        }
+        if (response.data){
+            console.log(response.data.message)
+            //console.log(response)        
+            return {
+                movie: response.data.data,
+                message : response.data.message
+            }
+        }
+    }catch(error){
+        // Si hay algun error externo
+        return {
+            hasError: true,
+            error: error.message
+        }
+    }
+}

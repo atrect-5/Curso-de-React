@@ -1,14 +1,15 @@
 
 import React, { Component } from "react";
+import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
 
-import { createMovieService } from "../../../services";
+import { createMovieService, getMoviesService, updateMovieById } from "../../../services";
 
 import { movieRating, movieTags } from "../../../consts";
 
 import './index.scss'
 
-export default class MovieForm extends Component {
+class MovieFormClass extends Component {
     constructor(props){
         super(props)
         this.state = this.getInitialState()
@@ -31,12 +32,44 @@ export default class MovieForm extends Component {
         touched: {
             title: false,
             year: false
-        }
+        },
+        isCreate:false,
+        isReady: false
     })
 
-    componentDidMount = () => {
-        
+    // Debido a que se trata del mismo componente es necesario editar la informacion cuando se accede desde diferentes url
+    componentDidMount = async () => {
+        this.loadMovieData()
     }
+    
+    // Debido a que se trata del mismo componente es necesario editar la informacion cuando se accede desde diferentes url
+    componentDidUpdate(prevProps) {
+        if (this.props.params.movieId !== prevProps.params.movieId) {
+            this.setState(this.getInitialState(), this.loadMovieData)
+        }
+    }
+    
+    loadMovieData = async () => {
+        const { movieId } = this.props.params
+        // Checamos si se esta actualizando una pelicula o creando una segun los parametros que recibimos
+        if (movieId){
+            // Update
+            const movie = await getMoviesService(movieId)
+            this.setState({
+                newMovie: movie,
+                isReady: true,
+                isCreate:false
+            })
+        }else{
+            // Create
+            this.setState({
+                newMovie: this.getInitialState().newMovie,
+                isCreate:true
+            })
+        }
+    }
+
+
 
     // Función para convertir la fecha al formato requerido por el campo datetime-local
     formatDateTimeForInput = (datetime) => {
@@ -147,16 +180,25 @@ export default class MovieForm extends Component {
         }
 
         try {
-            const result = await createMovieService (newMovie)
-
-            if (!result.hasError){
-                toast.success('Pelicula creada con exito')  
-                this.setState(this.getInitialState())      
+            if (this.state.isCreate){
+                const result = await createMovieService (newMovie)
+    
+                if (!result.hasError){
+                    toast.success('Pelicula creada con exito')  
+                    this.setState(this.getInitialState())      
+                }else{
+                    toast.error(`Hubo un error al crear pelicula -> ${result.error}`)
+                }
             }else{
-                toast.error(`Hubo un error al crear pelicula -> ${result.error}`)
+                const result = await updateMovieById (newMovie._id, newMovie)
+                if (!result.hasError){
+                    toast.success('Pelicula actualizada con exito')  
+                    this.props.navigate(`/movies/${newMovie._id}`)
+                }else{
+                    toast.error(`Hubo un error al actualizar pelicula -> ${result.error}`)
+                }
             }
-            
-
+    
         }catch(error){
             toast.error(`Error del servidor`)
             console.log(error)            
@@ -179,7 +221,7 @@ export default class MovieForm extends Component {
         return(
             <>
                 <div className="form-movie-container">
-                    <p className="page-title">{this.state.newMovie.title ? 'Editar pelicula' : 'Crear Pelicula' }</p>
+                    <p className="page-title">{this.state.isCreate ? 'Crear Pelicula' : 'Editar pelicula' }</p>
                     <div className="input-data-container">
 
                         <input type="text" name="title" value={title} 
@@ -255,3 +297,12 @@ export default class MovieForm extends Component {
         )
     }
 }
+
+// Componente funcional para obtener los parámetros de la URL y pasarlos como props
+const MovieForm = (props) => {
+    const params = useParams()
+    const navigate = useNavigate()
+    return <MovieFormClass {...props} params={params} navigate={navigate} />
+}
+
+export default MovieForm;
