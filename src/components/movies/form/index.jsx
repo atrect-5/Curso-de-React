@@ -39,18 +39,17 @@ class MovieFormClass extends Component {
         isReady: false
     })
 
-    // Debido a que se trata del mismo componente es necesario editar la informacion cuando se accede desde diferentes url
     componentDidMount = async () => {
-        this.loadMovieData()
+        this.loadMovieData() // Se cargan los datos de la pelicula o el state vacio
     }
     
-    // Debido a que se trata del mismo componente es necesario editar la informacion cuando se accede desde diferentes url
     componentDidUpdate(prevProps) {
         if (this.props.params.movieId !== prevProps.params.movieId) {
-            this.setState(this.getInitialState(), this.loadMovieData)
+            this.setState(this.getInitialState(), this.loadMovieData) // Se recargan los datos de la pelicula o el state vacio
         }
     }
     
+    // Debido a que se trata del mismo componente para actualizar y crear, es necesario actualizar la informacion si se cambia de ruta
     loadMovieData = async () => {
         const { movieId } = this.props.params
         // Checamos si se esta actualizando una pelicula o creando una segun los parametros que recibimos
@@ -71,8 +70,6 @@ class MovieFormClass extends Component {
         }
     }
 
-
-
     // Función para convertir la fecha al formato requerido por el campo datetime-local
     formatDateTimeForInput = (datetime) => {
         const date = new Date(datetime);
@@ -87,7 +84,7 @@ class MovieFormClass extends Component {
             newMovie: {
                 ...prevState.newMovie,
                 schedules: prevState.newMovie.schedules
-                                                .filter(schedule => schedule.time )
+                                                .filter(schedule => schedule.time ) // Se filtran los horarios vacios
             }
         }))
     }
@@ -165,11 +162,14 @@ class MovieFormClass extends Component {
         })
     }
 
+    // Metodo que se ejecutara al dar clic en guardar cambios
     handleSubmit = async () => {
         // Primero formatemos la fecha y esperamos a que termine la funcion, ya que se debe eliminar los horarios vacios
         await this.formatDateTimeForDatabase()
 
         const { newMovie } = this.state
+
+        // Cambiamos el estado de touched a true
         this.setState({
             touched:{
                 title:true,
@@ -177,12 +177,14 @@ class MovieFormClass extends Component {
             }
         })
 
+        // Si faltan el titulo, el año o el año es negativo, no se podran guardar los datos
         if (!newMovie.title || !newMovie.year || newMovie.year<0){
             toast.error(`Faltan datos`)
             return
         }
 
         try {
+            // Si se quiere crear una pelicula, se llama al servicio de crear, sino al de actualizar
             if (this.state.isCreate){
                 const result = await createMovieService (newMovie)
     
@@ -190,6 +192,7 @@ class MovieFormClass extends Component {
                     toast.success('Pelicula creada con exito')  
                     this.setState(this.getInitialState())      
                 }else{
+                    // Si el servidor respondio con un error
                     toast.error(`Hubo un error al crear pelicula -> ${result.error}`)
                 }
             }else{
@@ -198,11 +201,13 @@ class MovieFormClass extends Component {
                     toast.success('Pelicula actualizada con exito')  
                     this.props.navigate(`/movies/${newMovie._id}`)
                 }else{
+                    // Si el servidor respondio con un error
                     toast.error(`Hubo un error al actualizar pelicula -> ${result.error}`)
                 }
             }
     
         }catch(error){
+            // Si hubo un error al hacer la peticion
             toast.error(`Error del servidor`)
             console.log(error)            
         }
@@ -221,17 +226,17 @@ class MovieFormClass extends Component {
             schedules
         } = this.state.newMovie 
 
+        // Se crea una lista de opciones con la lista de ratings declaradas en 'const/'
         const options = movieRating.map((rating) => ({
             label: rating,
             value: rating,
         }))
 
-        const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
         return(
             <>
+                {/* Se crea el componente con los datos del state para crear/actualizar peliculas */}
                 <div className="form-movie-container">
-                    <p className="page-title">{this.state.isCreate ? 'Crear Pelicula' : 'Editar pelicula' }</p>
+                    <p className="page-title">{this.state.isCreate ? 'Crear Pelicula' : 'Editar pelicula' }</p> {/* Checamos si se esta creando o actualizando */}
                     <div className="input-data-container">
                         <div className="left-side-input-data">
 
@@ -330,7 +335,7 @@ class MovieFormClass extends Component {
 
                             <FormControlLabel
                             control={
-                                <Checkbox {...label} checked={isOnCinemas} 
+                                <Checkbox {...{ inputProps: { 'aria-label': 'Checkbox demo' } }} checked={isOnCinemas} 
                                 className="checkbox-custom"
                                 onChange={() => {
                                     this.handleChange({ target: { name: 'isOnCinemas', value: isOnCinemas ? false : true } })

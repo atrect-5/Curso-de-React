@@ -7,6 +7,7 @@ import azulSchoolLogo from "../../assets/azul-school-logo.png";
 
 import './index.scss'
 
+// Se crea el commponente de la ruta principal (presentacion)
 const HomePage = () => (
     <>
         <div className="homepage-container">

@@ -34,7 +34,7 @@ const Header = () => {
                 </ul>
                 <div className="search-container">
                     <input type="text" name="search-input" placeholder="Buscar..."
-                    value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                    value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>{/* Al hacer un cambio en el input de buscar, se guarda el nuevo valor */}
                     <button onClick={handleSearch}>Buscar</button>
                 </div>
             </header>

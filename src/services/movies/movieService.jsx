@@ -6,7 +6,11 @@ import { API_URL, moviesEndpoint } from '../../consts'
 
 /*******  Funciones que accederan al API para un CRUD a la base de datos *******/
 
-// Servicio que obtiene todas las peliculas o una sola filtrada por id si se le pasa como parametro
+// Este servicio consulta el get de la API para obtener peliculas segun algunos parametros, 
+    /*
+        -> Si se obtiene un mmovieId, quiere decir que se esta buscando una pelicula especifica por id y esta se manda en la URL de la API
+        -> Si se obtiene algun tag, quiere decir que se estan filtrando peliculas por tag y se manda como parametro de la URL a la API
+    */
 export const getMoviesService = async (movieId, tags) => {
     try{
         const response = await axios.get(`${API_URL}${moviesEndpoint}${movieId ? movieId : ''}${tags ? `?tags=${tags}` : ''}`)
@@ -68,6 +72,7 @@ export const createMovieService = async (movieData) => {
     }
 }
 
+// Este servicio hace la consulta a la API para actualizar los datos de una pelicula, usa el movieId para identificar la pelicula y guardar los nuevos datos de 'movieData'
 export const updateMovieByIdService = async (movieId, movieData) => {
     try{
         const response = await axios.put(`${API_URL}${moviesEndpoint}${movieId}`, movieData,
@@ -101,6 +106,7 @@ export const updateMovieByIdService = async (movieId, movieData) => {
     }
 }
 
+// Este servicio hace la consulta a la API para eliminar una pelicula segun su ID
 export const deleteMovieByIdService = async movieId => {
     try{
         const response = await axios.delete(`${API_URL}${moviesEndpoint}${movieId}`)

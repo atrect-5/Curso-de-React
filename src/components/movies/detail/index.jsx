@@ -9,6 +9,7 @@ import { getMoviesService, deleteMovieByIdService } from "../../../services"
 
 import './index.scss'
 
+// Declaramos la clase de nuestro componente para ver los detalles de una pelicula en particular
 class MovieDetailClass extends Component {
     constructor(props){
         super(props)
@@ -37,6 +38,7 @@ class MovieDetailClass extends Component {
                         isReady : true
                     })
                 }else{
+                    // Si el servidor si respondio, pero con un mensaje de error
                     this.setState({
                         hasError : true,
                         error : movie.error
@@ -50,6 +52,7 @@ class MovieDetailClass extends Component {
                 })
             }
         }catch(error){
+            // Si hubo algun error al hacer la peticion
             this.setState({
                 hasError : true,
                 error
@@ -88,17 +91,20 @@ const DetailComponent = ({movie}) => {
     const navigate = useNavigate()
 
     const eliminarPelicula = async () => {
+        // Si se da clic en eliminar, se pregunta si se esta seguro
         if (!window.confirm('Deseas eliminar la pelicula?'))
         {
             return
         }
         try {
+            // Se llama al servicio que se encarga de eliinar peliculas
             const result = await deleteMovieByIdService(movie._id)
 
             if (!result.hasError){
                 toast.success('Pelicula eliminada con exito')  
                 navigate(`/movies`)     
             }else{
+                // Si el servidor respondio con algun error
                 toast.error(`Hubo un error al eliminar pelicula -> ${result.error}`)
             }
     
@@ -109,10 +115,12 @@ const DetailComponent = ({movie}) => {
     }
 
     const editarPelicula = () => {
+        // Se carga la ruta donde se editara la pelicula
         navigate(`/movies/edit/${movie._id}`)
     }
     return (
     <>
+        {/* Cargamos los datos de la pelicula */}
         <div className="movie-info">
             <div className="movie-detail-title">
                 <img className="img-detail" src={movie.cover} alt="" />

@@ -14,12 +14,12 @@ import './App.scss'
 const App = () => {
   return (
     <Router>
-      <Header/>
+      <Header/> {/* Al cargar el header aqui, se asegura que aparezca siempre arriba en todas las rutas de la app */}
       <div className="main-container">
-        <RoutesOfApp/>  
+        <RoutesOfApp/>  {/* Aqui se cargaran las rutas de la aplicacion */}
       </div>
-      <Footer/> 
-      <ToastContainer/>
+      <Footer/> {/* Al cargar el footer aqui, se asegura que aparezca siempre abajo en todas las rutas de la app */}
+      <ToastContainer/> {/* Se manda el contenedor de tostify desde la App principal para que se pueda usar en cualquier otro componente */}
     </Router>
   )
 }

@@ -29,24 +29,21 @@ class MovieListClass extends Component {
         this.loadingData()
     }
     
+    // Se ejecuta cuando el componente de actualiza
     componentDidUpdate = async (prevProps) => {
         if (this.props.location.search !== prevProps.location.search) {
             this.loadingData();
         }
     }
     
+    // Se cargan los datos de las peliculas que se quieren buscar
     loadingData = async () => {
+        // Se obtienen los parametros de la url (vienen despues del '?')
         const searchParams = new URLSearchParams(this.props.location.search)
         const tagsParam = searchParams.get('tags')
         
-        let movies
-        // Se llama al servicio que obtiene las peliculas de la api
-        if (tagsParam){
-            movies = await getMoviesService('', tagsParam)
-        }else{
-            movies = await getMoviesService()
-        }
-        
+        // Se llama al servicio que obtiene las peliculas de la api segun si hay parametros de busqueda o no
+        const movies = await getMoviesService('', tagsParam)
         
     
         // Si no hay error guardamos la lista de peliculas, si hay error guardamos el error
@@ -92,6 +89,7 @@ class MovieListClass extends Component {
 
 }
 
+// Componente funcional que manda los parametros de la URL al componente de clase
 const MovieList = (props) => {
     const location = useLocation();
     return <MovieListClass {...props} location={location} />
@@ -187,4 +185,5 @@ const LoadingComponent = (props) => (
     </>
 )
 
+// Exportamos el componente funcional que usa al componente de clase
 export default MovieList

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import './notfound.scss'
 
+// Se crea el componente para cuando se accede a una ruta desconocida
 const NotFound = () => (
     <>
         <div className="notFound-container">
