@@ -25,21 +25,211 @@
     .input-data-container {
         width: 90%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
         box-sizing: border-box;
         padding: 40px 60px;
         margin-bottom: 20px;
         border-radius: 30px;
-        background-color: rgba($accent-variant, 0.4);
+        background-color: rgba($accent-variant, 0.3);
         box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
         transition: all .3s ease;
         &:hover {
             background-color: rgba($accent-variant-2, 0.4);
         }
+        @media (max-width: 1100px) {
+            padding: 20px 15px;
+        }
         @media (max-width: 768px) {
             padding: 40px 15px;
+            flex-direction: column;
         }
+
+
+        .left-side-input-data {
+            color: $white;
+            width: 100%;
+            margin-right: 10px;
+
+        .MuiInputBase-input {
+            color: $white; // Cambia el color del texto a blanco
+        }
+        .MuiInputLabel-root {
+            color: $gray; // Cambia el color del label a gris
+        }
+        
+        /******* variant="standard"  *******/
+        .MuiInput-underline:before {
+            border-bottom: 1px solid $accent; // Cambia el color del borde inferior a blanco
+        }
+        .MuiInput-underline:hover:not(.Mui-disabled):before {
+            border-bottom: 2px solid $accent; // Cambia el color del borde inferior al pasar el mouse a blanco
+        }
+        .MuiInput-underline:after {
+            border-bottom: 2px solid $white; // Cambia el color del borde inferior cuando está enfocado
+        }
+        
+        /******* variant="outlined"  *******/
+        .MuiOutlinedInput-notchedOutline {
+            border-color: $accent; // Cambia el color del borde 
+        }
+        .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+            border: 2px solid $accent; // Cambia el color del borde al pasar el mouse
+        }
+        .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+            border-color: white; // Cambia el color del borde cuando está enfocado
+        }
+
+            .input {
+                width: 25vw;
+                margin-top: 20px;
+                @media (max-width: 1100px) {
+                    width: 40vw;
+                }
+                @media (max-width: 768px) {
+                    width: 50vw;
+                }
+            }
+            .text-area {
+                width: 35vw;
+                margin-top: 30px;
+                @media (max-width: 1100px) {
+                    width: 40vw;
+                }
+                @media (max-width: 768px) {
+                    width: 70vw;
+                }
+
+            }
+            .error-message {
+                height: auto;
+                width:fit-content;
+                padding: 7px;
+                border-radius: 8px;
+                text-align: center;
+                color: $white;
+                background-color: $red;
+            }
+            @media (max-width: 768px) {
+                margin: 0;
+            }
+        }
+        .rigth-side-input-data {
+            width: 100%;
+            margin-left: 10px;
+            color: $white;
+
+            .checkbox-custom  {
+                color: $black;
+                &.Mui-checked{
+                    color: $white
+                }
+              }
+            .checkbox-matrix{
+                width: 80%;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+                gap: 25px;
+                justify-items:first baseline;
+                
+            }
+
+            p {
+                color: $white;
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+            .input {
+                width: 25vw;
+                margin-top: 20px;
+                @media (max-width: 1100px) {
+                    width: 40vw;
+                }
+                @media (max-width: 768px) {
+                    width: 50vw;
+                }
+            }
+            .autocomplete {
+                width: 25vw;
+                @media (max-width: 1100px) {
+                    width: 40vw;
+                }
+                @media (max-width: 768px) {
+                    width: 50vw;
+                }
+            }
+            .remove-schedule-button {
+                width: auto;
+                height: auto;
+                border: 0;
+                margin: 5px 10px;
+                border-radius: 15px;
+                font-size: 1em;
+                font-weight: 500;
+                color: $white;
+                background-color: $accent-variant;
+                box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
+                transition: all 0.1s;
+                &:hover {
+                    background-color: $red;
+                }
+                &:active {
+                    background-color: $accent-variant-2;
+                }
+            }
+            .add-schedule-button {
+                width: 40%;
+                height: 30px;
+                border: 0;
+                margin: 20px 0;
+                border-radius: 15px;
+                font-size: 1em;
+                font-weight: 700;
+                color: $white;
+                background-color: $accent;
+                box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
+                transition: all 0.1s;
+                &:hover {
+                    background-color: $accent-variant;
+                }
+                &:active {
+                    background-color: $accent-variant-2;
+                }
+                @media (max-width: 768px) {
+                    height: 50px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                margin: 0;
+            }
+            
+        }
+
+        
     }
 
+    .save-info-button{
+        width: 30%;
+        height: 30px;
+        border: 0;
+        margin-top: 20px;
+        margin-bottom: 100px;
+        border-radius: 15px;
+        font-size: 1em;
+        font-weight: 700;
+        color: $white;
+        background-color: $accent;
+        box-shadow: 5px 5px 7px rgba($color: $black, $alpha: .6);
+        transition: all 0.1s;
+        &:hover {
+            background-color: $accent-variant;
+        }
+        &:active {
+            background-color: $accent-variant-2;
+        }
+        @media (max-width: 768px) {
+            height: 50px;
+        }
+    }
+    
 }

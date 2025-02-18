@@ -115,6 +115,9 @@ const DetailComponent = ({movie}) => {
                         A&ntilde;o en que salio la pelicula: <span>{movie.year}</span>
                     </p>
                     <p>
+                        Clasificación: <span>{movie.contentRating}</span>
+                    </p>
+                    <p>
                         {
                             movie.isOnCinemas ? 
                                 'Disponible en cines'
@@ -122,22 +125,43 @@ const DetailComponent = ({movie}) => {
                         }
                     </p>
                 </div>
+
                 <div className="movie-schedules-detail">
+                    {
+                        movie.schedules.length > 0 ?
+                            <>
+                            <p>Horarios disponibles: </p>
+                            {
+                                movie.schedules.map((schedule) => (
+                                    <p className="schedule-detail" key={schedule._id}>
+                                    {moment(schedule.time).format('DD / MM - HH:mm')}
+                                </p>
+                                ))
+                            }
+                            </>
+                            : <p>No hay horarios disponibles</p>
+                    }
+                </div>
+
+                <div className="movie-tags-detail">
                 {
-                    movie.schedules.length > 0 ?
+                        movie.tags.length > 0 ?
                         <>
-                        <p>Horarios disponibles: </p>
+                        <p>Genero: </p>
                         {
-                            movie.schedules.map((schedule) => (
-                                <p className="schedule-detail" key={schedule._id}>
-                                {moment(schedule.time).format('DD / MM - HH:mm')}
+                            movie.tags.map((tag) => (
+                                <p className="tag-detail" key={tag._id}>
+                                {tag}
                             </p>
                             ))
                         }
                         </>
-                        : <p>No hay horarios disponibles</p>
-                }
+                        : <p>No hay genero registrado</p>
+                    }
                 </div>
+
+                
+
             </div>
             <hr />
             <div className="button-detail-container">

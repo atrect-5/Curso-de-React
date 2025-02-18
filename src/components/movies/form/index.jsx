@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
 
+import { TextField, Autocomplete, Checkbox, FormControlLabel } from '@mui/material';
+
 import { createMovieService, getMoviesService, updateMovieById } from "../../../services";
 
 import { movieRating, movieTags } from "../../../consts";
@@ -94,12 +96,12 @@ class MovieFormClass extends Component {
     // Metodo que actualiza los datos del state cuando se hace algun cambio
     handleChange = e => {
         // Obtenemos el nombre del elemento que se cambio y el valor del mismo
-        const { name, value, type, checked } = e.target
+        const { name, value } = e.target
         // Guardamos en el state los datos de la pelicula que teniamos mas el valor del objeto cambiado
         this.setState(prevState => ({
             newMovie: {
                 ...prevState.newMovie,
-                [name]: type === 'checkbox' ? checked : (value || '')
+                [name]: value
             },
             touched: {
                 ...prevState.touched,
@@ -176,6 +178,7 @@ class MovieFormClass extends Component {
         })
 
         if (!newMovie.title || !newMovie.year || newMovie.year<0){
+            toast.error(`Faltan datos`)
             return
         }
 
@@ -218,80 +221,139 @@ class MovieFormClass extends Component {
             schedules
         } = this.state.newMovie 
 
+        const options = movieRating.map((rating) => ({
+            label: rating,
+            value: rating,
+        }))
+
+        const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
         return(
             <>
                 <div className="form-movie-container">
                     <p className="page-title">{this.state.isCreate ? 'Crear Pelicula' : 'Editar pelicula' }</p>
                     <div className="input-data-container">
+                        <div className="left-side-input-data">
 
-                        <input type="text" name="title" value={title} 
-                            placeholder="Titulo" required onChange={this.handleChange} 
-                        />
-                        {
-                            this.state.touched.title && !title && (
-                                <p className="error-message">El título es necesario</p>
-                            ) 
-                        }
-                        <textarea name="description" value={description} 
-                            placeholder="Descripcion" onChange={this.handleChange}>
-                        </textarea>
-                        <input type="number" name="year" value={year} 
-                            placeholder='Año' required onChange={this.handleChange}
-                        />
-                        {
-                            this.state.touched.year && !year && (
-                                <p className="error-message">El año es necesario</p>
-                            )
-                        }{
-                            year<0 && (
-                                <p className="error-message">El año no puede ser negativo</p>
-                            )
-                        }
-                        <input type="number" name="duration" value={duration} 
-                            placeholder="Duracion" onChange={this.handleChange} 
-                        />
-                        <select name="contentRating" value={contentRating} onChange={this.handleChange}>
+                            <TextField className="input" type="text" name="title" value={title} variant="standard"
+                                label="Titulo" required onChange={this.handleChange} 
+                            />
+                            {
+                                this.state.touched.title && !title && (
+                                    <p className="error-message">El título es necesario</p>
+                                ) 
+                            }
+                            <TextField className="text-area" name="description" value={description} 
+                                variant="outlined"
+                                label="Descripcion" onChange={this.handleChange}
+                                multiline
+                                maxRows={4}/>
+                                
+                            <TextField className="input" type="number" name="year" value={year} variant="standard"
+                                label='Año' required onChange={this.handleChange}
+                            />
+                            {
+                                this.state.touched.year && !year && (
+                                    <p className="error-message">El año es necesario</p>
+                                )
+                            }{
+                                year<0 && (
+                                    <p className="error-message">El año no puede ser negativo</p>
+                                )
+                            }
+                            <TextField className="input" type="number" name="duration" value={duration} variant="standard"
+                                label="Duracion" onChange={this.handleChange} 
+                            />
+
+                            <TextField className="input" type="number" name="tiketPrice" value={tiketPrice} variant="standard"
+                                label="Precio del boleto" onChange={this.handleChange}
+                            />
+
+                            <Autocomplete
+                                className="autocomplete"
+                                name= 'contentRating'
+                                options={options}
+                                getOptionLabel={(option) => option.label}
+                                value={options.find(option => option.value === contentRating) || null}
+                                onChange={(event, newValue) => {
+                                    this.handleChange({ target: { name: 'contentRating', value: newValue ? newValue.value : '' } })
+                                }}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Clasificación" variant="standard" className="input"/>
+                                )}
+                            />
+
+                            {/*
+                            <select name="contentRating" value={contentRating} onChange={this.handleChange}>
                             <option value="" disabled hidden>Clasificación</option>
                             {
                                 movieRating.map( (rating) => (
-                                    <option value={rating} key={rating}>{rating}</option>
+                                <option value={rating} key={rating}>{rating}</option>
                                 ))
                             }
-                        </select>
-
-                        <p>
-                            Genero de la pelicula:
-                        </p>
-                        {
-                            movieTags.map((tag) => (
-                                <label key={tag}>
-                                    {tag} <input type="checkbox" name={tag} 
-                                    checked={tags.includes(tag)} onChange={this.handleCheckboxChange}/>
-                                </label>
-                            ))
-                        }
-
-                        <input type="number" name="tiketPrice" value={tiketPrice} 
-                            placeholder="Precio del boleto" onChange={this.handleChange}
-                        />
-
-                        <p>La pelicula esta en el cine? <input type="checkbox" name="isOnCinemas" 
-                        checked={isOnCinemas} onChange={this.handleChange}/></p>
-
-                        <p>Horarios:</p>
-                        {schedules.map((schedule, index) => (
-                            <div key={index} className="schedule-input">
-                                <input type="datetime-local" value={schedule.time ? this.formatDateTimeForInput(schedule.time) : ''} onChange={(e) => this.handleScheduleChange(index, e)} />
-                                <button type="button" onClick={() => this.removeSchedule(index)}>Eliminar</button>
+                            </select>
+                            */}
+                        </div>
+                        <div className="rigth-side-input-data">
+                            <p>
+                                Genero de la pelicula:
+                            </p>
+                            <div className="checkbox-matrix">
+                                {
+                                movieTags.map((tag) => (
+                                    <FormControlLabel
+                                    key={tag}
+                                    control={
+                                        <Checkbox
+                                        className="checkbox-custom"
+                                        name={tag}
+                                        checked={tags.includes(tag)}
+                                        onChange={this.handleCheckboxChange}
+                                        />
+                                    }
+                                    label={tag}
+                                    />
+                                ))
+                                }
+                                {/*
+                                    movieTags.map((tag) => (
+                                        <label key={tag}>
+                                            {tag} <input type="checkbox" name={tag} 
+                                            checked={tags.includes(tag)} onChange={this.handleCheckboxChange}/>
+                                            </label>
+                                    ))
+                                */}
                             </div>
-                        ))}
-                        <button type="button" onClick={this.addSchedule}>Agregar Horario</button>
+                            <br />
+                            <hr />
+                            <br />
 
+                            <FormControlLabel
+                            control={
+                                <Checkbox {...label} checked={isOnCinemas} 
+                                className="checkbox-custom"
+                                onChange={() => {
+                                    this.handleChange({ target: { name: 'isOnCinemas', value: isOnCinemas ? false : true } })
+                                }} />
+                            }
+                            label="Está en cines"
+                            />
 
-                        <button className="save-info-button" onClick={() => this.handleSubmit()}>Guardar informacion</button>
+                            <p>Horarios:</p>
+                            {schedules.map((schedule, index) => (
+                                <div key={index} className="schedule-input">
+                                    <input type="datetime-local" value={schedule.time ? this.formatDateTimeForInput(schedule.time) : ''} onChange={(e) => this.handleScheduleChange(index, e)} />
+                                    <button type="button" onClick={() => this.removeSchedule(index)} className="remove-schedule-button">—</button>
+                                </div>
+                            ))}
+                            <button type="button" onClick={this.addSchedule} className="add-schedule-button">Agregar Horario</button>
 
+                        </div>
 
                     </div>
+
+                    <button className="save-info-button" onClick={() => this.handleSubmit()}>Guardar informacion</button>
+
                 </div>
             </>
         )
