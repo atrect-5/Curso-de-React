@@ -8,10 +8,15 @@ import "./index.scss"
 const Header = () => {
     // Utilizamos el state para guardar lo que se ponga en buscar y navigate para navegar con los tags
     const navigate = useNavigate()
+    const [searchTerm, setSearchTerm] = useState("") 
 
     // Meteodo que se ejecutara al precionar el boton
     const handleSearch = () => {
-        
+        // Checamos si hay algo escrito en 'buscar'
+        if (searchTerm.trim()){
+            // Navegamos a la lista de peliculas buscando las tags indicadas
+            navigate(`/movies?tags=${searchTerm}`)
+        }
     }
     return (
         <>
@@ -28,8 +33,9 @@ const Header = () => {
                     </li>
                 </ul>
                 <div className="search-container">
-                    <input type="text" name="search-input" placeholder="Buscar..."/>
-                    <button>Buscar</button>
+                    <input type="text" name="search-input" placeholder="Buscar..."
+                    value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                    <button onClick={handleSearch}>Buscar</button>
                 </div>
             </header>
         </>

@@ -10,6 +10,9 @@ import { API_URL, moviesEndpoint } from '../../consts'
 export const getMoviesService = async (movieId, tags) => {
     try{
         const response = await axios.get(`${API_URL}${moviesEndpoint}${movieId ? movieId : ''}${tags ? `?tags=${tags}` : ''}`)
+        console.log('tags recibidos en el servicio',tags)
+        console.log('movie recibida en el servicio',movieId)
+        
         if(response.data.error){
             // El servidor manda error
             return {

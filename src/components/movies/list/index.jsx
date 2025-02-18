@@ -5,7 +5,7 @@
 import React, { Component } from "react"
 import moment from "moment/moment"
 import { RingLoader } from "react-spinners"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 // importamos nuestros servicios 
 import { getMoviesService } from "../../../services/"
@@ -13,7 +13,7 @@ import { getMoviesService } from "../../../services/"
 // importmos los estilos
 import './index.scss'
 
-export default class MovieList extends Component {
+class MovieListClass extends Component {
     constructor() {
         super()
         this.state = {
@@ -26,9 +26,29 @@ export default class MovieList extends Component {
 
     // Se ejecuta en cuanto el componente se renderiza
     componentDidMount = async () => {
+        this.loadingData()
+    }
+    
+    componentDidUpdate = async (prevProps) => {
+        if (this.props.location.search !== prevProps.location.search) {
+            this.loadingData();
+        }
+    }
+    
+    loadingData = async () => {
+        const searchParams = new URLSearchParams(this.props.location.search)
+        const tagsParam = searchParams.get('tags')
+        
+        let movies
         // Se llama al servicio que obtiene las peliculas de la api
-        const movies = await getMoviesService()
-
+        if (tagsParam){
+            movies = await getMoviesService('', tagsParam)
+        }else{
+            movies = await getMoviesService()
+        }
+        
+        
+    
         // Si no hay error guardamos la lista de peliculas, si hay error guardamos el error
         if (!movies.error) {
             this.setState({
@@ -72,6 +92,10 @@ export default class MovieList extends Component {
 
 }
 
+const MovieList = (props) => {
+    const location = useLocation();
+    return <MovieListClass {...props} location={location} />
+};
 
 // Creamos los componentes que se cargaran en la pantalla
 
@@ -162,3 +186,5 @@ const LoadingComponent = (props) => (
         <RingLoader color="#ffffff" size={100}/>
     </>
 )
+
+export default MovieList
