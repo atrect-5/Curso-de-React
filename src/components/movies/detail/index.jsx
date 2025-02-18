@@ -3,8 +3,9 @@ import React, { Component } from "react"
 import moment from "moment"
 import { useParams, useNavigate } from "react-router-dom"
 import { RingLoader } from "react-spinners"
+import { toast } from "react-toastify"
 
-import { getMoviesService } from "../../../services"
+import { getMoviesService, deleteMovieByIdService } from "../../../services"
 
 import './index.scss'
 
@@ -86,9 +87,27 @@ class MovieDetailClass extends Component {
 const DetailComponent = ({movie}) => {
     const navigate = useNavigate()
 
-    const eliminarPelicula = () => {
-        navigate(`/movies/delete/${movie._id}`)
+    const eliminarPelicula = async () => {
+        if (!window.confirm('Deseas eliminar la pelicula?'))
+        {
+            return
+        }
+        try {
+            const result = await deleteMovieByIdService(movie._id)
+
+            if (!result.hasError){
+                toast.success('Pelicula eliminada con exito')  
+                navigate(`/movies`)     
+            }else{
+                toast.error(`Hubo un error al eliminar pelicula -> ${result.error}`)
+            }
+    
+        }catch(error){
+            toast.error(`Error del servidor`)
+            console.log(error)            
+        }
     }
+
     const editarPelicula = () => {
         navigate(`/movies/edit/${movie._id}`)
     }
@@ -150,7 +169,7 @@ const DetailComponent = ({movie}) => {
                         <p>Genero: </p>
                         {
                             movie.tags.map((tag) => (
-                                <p className="tag-detail" key={tag._id}>
+                                <p className="tag-detail" key={tag}>
                                 {tag}
                             </p>
                             ))

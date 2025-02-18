@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { TextField, Autocomplete, Checkbox, FormControlLabel } from '@mui/material';
 
-import { createMovieService, getMoviesService, updateMovieById } from "../../../services";
+import { createMovieService, getMoviesService, updateMovieByIdService } from "../../../services";
 
 import { movieRating, movieTags } from "../../../consts";
 
@@ -193,7 +193,7 @@ class MovieFormClass extends Component {
                     toast.error(`Hubo un error al crear pelicula -> ${result.error}`)
                 }
             }else{
-                const result = await updateMovieById (newMovie._id, newMovie)
+                const result = await updateMovieByIdService (newMovie._id, newMovie)
                 if (!result.hasError){
                     toast.success('Pelicula actualizada con exito')  
                     this.props.navigate(`/movies/${newMovie._id}`)
