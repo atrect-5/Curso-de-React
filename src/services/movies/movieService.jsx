@@ -7,9 +7,9 @@ import { API_URL, moviesEndpoint } from '../../consts'
 /*******  Funciones que accederan al API para un CRUD a la base de datos *******/
 
 // Servicio que obtiene todas las peliculas o una sola filtrada por id si se le pasa como parametro
-export const getMoviesService = async (movieId) => {
+export const getMoviesService = async (movieId, tags) => {
     try{
-        const response = await axios.get(`${API_URL}${moviesEndpoint}${movieId ? movieId : ''}`)
+        const response = await axios.get(`${API_URL}${moviesEndpoint}${movieId ? movieId : ''}${tags ? `?tags=${tags}` : ''}`)
         if(response.data.error){
             // El servidor manda error
             return {
