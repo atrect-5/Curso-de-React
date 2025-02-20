@@ -67,6 +67,7 @@
                 color: $white;
                 font-weight: 600;
                 font-size: 1.8em;
+                word-break: break-word;
                 @media (max-width: 768px) {
                     font-size: 1.2em;
                 }
@@ -75,6 +76,7 @@
                 font-weight: 500;
                 color: $white;
                 font-size: 1.2em;
+                word-break: break-word;
                 @media (max-width: 768px) {
                     font-size: 1em;
                 }

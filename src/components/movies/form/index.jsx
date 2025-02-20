@@ -35,7 +35,7 @@ class MovieFormClass extends Component {
             title: false,
             year: false
         },
-        isCreate:false,
+        isCreate: true,
         isReady: false
     })
 
