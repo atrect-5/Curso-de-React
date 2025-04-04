@@ -1,6 +1,6 @@
 // Importamos react ya que haremos un componente de react
 import React from "react"
-import { BrowserRouter as Router } from "react-router-dom"
+import { HashRouter as Router } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
 // Importamos nuestros componentes 
