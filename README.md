@@ -4,6 +4,8 @@
   
 Este proyecto fue hecho con create-react-app
 
+Esta practica hace un CRUD a una lista de peliculas (Informacion de peliculas). Esta app te permite ver la lista completa de peliculas y filtrarlas segun categoria, ver la informacion especifica de una pelicula, editar la informacion de una pelicula, y eliminar una pelicula de la lista.
+  
 La API que se utiliza en esta practica se encuentra en: https://github.com/atrect-5/Curso-Node.js
 
 > Version de node con la que se realizo el proyecto: v20.17.0  
