@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Curso-de-React/static/css/main.229a484f.css",
+    "main.js": "/Curso-de-React/static/js/main.fd8b1421.js",
+    "static/js/488.07383ccf.chunk.js": "/Curso-de-React/static/js/488.07383ccf.chunk.js",
+    "static/media/backgorund-homepage.jpg": "/Curso-de-React/static/media/backgorund-homepage.9c7bbb1431c081417add.jpg",
+    "index.html": "/Curso-de-React/index.html",
+    "main.229a484f.css.map": "/Curso-de-React/static/css/main.229a484f.css.map",
+    "main.fd8b1421.js.map": "/Curso-de-React/static/js/main.fd8b1421.js.map",
+    "488.07383ccf.chunk.js.map": "/Curso-de-React/static/js/488.07383ccf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.229a484f.css",
+    "static/js/main.fd8b1421.js"
+  ]
+}
